@@ -4,14 +4,10 @@
   "description": "Azure Function para processar PDFs de inadimplência com OCR",
   "main": "src/functions/processOcr.js",
   "scripts": {
-    "start": "func start",
-    "test": "echo \"No tests yet\""
+    "start": "func start"
   },
   "dependencies": {
     "@azure/functions": "^4.0.0",
     "axios": "^1.6.0"
-  },
-  "devDependencies": {
-    "@azure/functions-core-tools": "^4.0.5611"
   }
 }
