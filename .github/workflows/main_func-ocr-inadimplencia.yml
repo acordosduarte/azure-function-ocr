@@ -28,12 +28,14 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-        - name: 'Resolve Project Dependencies Using Npm'
+      - name: 'Resolve Project Dependencies Using Npm'
         shell: bash
         run: |
-        npm install
-        npm run build --if-present
-
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          npm install
+          npm run build --if-present
+          npm run test --if-present
+          popd
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
@@ -65,9 +67,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_07B95D6BCF4B4D35988D79A64FC8D9ED }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9421D472FEA449D99AF66E626CEDCF77 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9C885D014EDF41879207087448C00988 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_B4B726DAAAF54B0CBE818947A10C7C27 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_EC5248EE00DA407CAC983137ED7B456F }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B5A567FAE43A4CC39614A6C8B75EB8D4 }}
 
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
@@ -76,5 +78,4 @@ jobs:
           app-name: 'func-ocr-inadimplencia'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-
           
