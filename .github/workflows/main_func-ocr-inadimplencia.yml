@@ -28,14 +28,12 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: 'Resolve Project Dependencies Using Npm'
+        - name: 'Resolve Project Dependencies Using Npm'
         shell: bash
         run: |
-          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          npm install
-          npm run build --if-present
-          npm run test --if-present
-          popd
+        npm install
+        npm run build --if-present
+
 
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
@@ -78,4 +76,5 @@ jobs:
           app-name: 'func-ocr-inadimplencia'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+
           
